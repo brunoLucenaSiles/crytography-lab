@@ -1,6 +1,5 @@
 from collections import Counter
 import string
-import matplotlib.pyplot as plt
 import numpy as np
 from activity3plus1 import calculate_average_offset
 from activitiy1 import decrypt_caesar

@@ -1,7 +1,9 @@
+# Alphabets to be used in the encryption and decryption
 alphabet_mayus = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 alphabet_minus = "abcdefghijklmnopqrstuvwxyz"
 
 
+# Function to encrypt a message using the Caesar cipher
 def encrypt_caesar(message, moves):
     encrypt_message = ""
     for character in message.upper():
@@ -19,6 +21,7 @@ def encrypt_caesar(message, moves):
     return encrypt_message
 
 
+# Function to encrypt a message using the Rail Fence cipher
 def encrypt_rail_fence(message, rails):
     if rails < 2:
         return message  # No encryption for 1 rail

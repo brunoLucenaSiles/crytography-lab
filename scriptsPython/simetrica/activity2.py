@@ -23,14 +23,11 @@ if __name__ == "__main__":
         with open("encrypted_caesar_text.txt", "r") as file:
             encrypted_message = file.read().strip()
 
-        print("Encrypted message from the file read:", encrypted_message)
-
-
         # Variables to store the best decryption
         best_movement = None
         max_valid_words = 0
 
-        # Bruteforce attack to decrypt without knowing the key
+        # Brute-force attack to decrypt without knowing the key
         print("\nTesting all the possible keys to do a brute-force attack:")
         for move in range(1, len(alphabet_mayus)):
             test_message = decrypt_caesar(encrypted_message, move)
@@ -58,8 +55,6 @@ if __name__ == "__main__":
         with open("encrypted_rail_fence_text.txt", "r") as file:
             encrypted_message = file.read().strip()
 
-        print("Encrypted message from the file read:", encrypted_message)
-
 
         # Variables to store the best decryption
         best_movement = None
@@ -72,7 +67,7 @@ if __name__ == "__main__":
             test_message = decrypt_rail_fence(encrypted_message, move)
             valid_words = count_words_valid(test_message,english_words)
 
-            print(f"Movement {move}: {test_message} (Number of word valids: {valid_words})")
+            print(f"Movement {move}: (Number of word valids: {valid_words})")
 
             if valid_words > max_valid_words:
                 max_valid_words = valid_words

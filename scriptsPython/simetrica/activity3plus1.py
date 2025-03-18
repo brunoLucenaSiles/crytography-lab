@@ -4,6 +4,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 from activitiy1 import alphabet_minus, alphabet_mayus, decrypt_caesar
 
+# Function to extract the one letter words from a text
+def analyze_counts(text):
+    # Remove all characters that are not letters
+    letters_only = ""
+    for char in text:
+        if char in alphabet_minus:
+            letters_only += char
+
+    return Counter(letters_only)
+
+# Function to calculate the number of valid words in the message
 def analyze_counts(text):
     # Remove all characters that are not letters
     letters_only = ""
@@ -14,16 +25,7 @@ def analyze_counts(text):
     return Counter(letters_only)
 
 
-def analyze_counts(text):
-    # Remove all characters that are not letters
-    letters_only = ""
-    for char in text:
-        if char in alphabet_minus:
-            letters_only += char
-
-    return Counter(letters_only)
-
-
+# Function to calculate the average offset between the most common words
 def calculate_average_offset(book_counts, cypher_counts):
     offsets = []
 

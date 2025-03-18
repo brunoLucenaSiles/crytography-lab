@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from activitiy1 import alphabet_minus, alphabet_mayus
 
+# Function to calculate the frequency of each letter in a text
 def calculate_frequencies(text):
     text = text.lower()
 
@@ -25,7 +26,7 @@ def calculate_frequencies(text):
             frequencies[letter] = 0
     return frequencies
 
-
+# Function to plot the letter frequency comparison
 def printPlot(book_frequencies, encrypted_frequencies):
     # Prepare the data to be plotted
     letters = list(book_frequencies.keys())
@@ -100,7 +101,7 @@ if __name__ == "__main__":
     
     # Apply the mapping to decrypt the text
     decrypted_text = decripting_with_mapping(encrypted_text, mapping)
-    print("Decrypted text:\n", decrypted_text)
+    # print("Decrypted text:\n", decrypted_text)
     
     # Save the decrypted text to a file
     with open("finis-mundi-decrypted.txt", "w", encoding="utf-8") as file:
