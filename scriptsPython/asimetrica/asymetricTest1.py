@@ -62,11 +62,12 @@ if __name__ == "__main__":
     private_key_b, public_key_b = generate_keys()
 
     print("Keys generated")
-    message = input("Enter a message to sent to B")
+    message = input("Enter a message to sent to B: ")
 
     print("Creating signature")
     print("Encrypting message")
     encrypted_blocks = encrypt_message(message, public_key_b)
+    print(encrypted_blocks)
     print("Sending message from A to B")
 
     decrypted_message = decrypt_message(encrypted_blocks, private_key_b)

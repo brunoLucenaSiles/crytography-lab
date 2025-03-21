@@ -3,9 +3,9 @@ from cryptography.hazmat.primitives import hashes
 
 # hay que instalar el paquete pycryptodome
 # pip install pycryptodome
-def generate_signature(private_key):
+def generate_signature(private_key,message):
     signature = private_key.sign(
-        str(private_key).encode(),
+        message,
         padding.PSS(
             mgf=padding.MGF1(algorithm=hashes.SHA256()),
             salt_length=padding.PSS.MAX_LENGTH
@@ -25,9 +25,9 @@ def generate_keys():
     public_key = private_key.public_key()
     return private_key, public_key
 
-def encrypt_message(message, signature, public_key_b):
+def encrypt_message(message, signature, public_key):
     chunk_size = 214
-    data_to_encrypt = str(message).encode()+ b"||SIGNATURE||" + signature
+    data_to_encrypt = message + b"||SIGNATURE||" + signature
     encrypted_blocks = []
 
     # Divide the message in chunks
@@ -35,7 +35,7 @@ def encrypt_message(message, signature, public_key_b):
         chunk = data_to_encrypt[i:i + chunk_size]
             
         # Cypher the chunk
-        encrypted_chunk = public_key_b.encrypt(
+        encrypted_chunk = public_key.encrypt(
             chunk,
             padding.OAEP(
                 mgf=padding.MGF1(algorithm=hashes.SHA256()),
@@ -61,16 +61,18 @@ def verify_signature(decrypted_data, client_public_key):
             ),
             hashes.SHA256()  # Algoritmo hash utilizado
         )
-        print("The firm is valid:", message.decode())
+        print("The firm is valid:")
+        return message.decode()
     except Exception as e:
         print("The firm is not valid:", e)
+        return None
         
-    return message
+    
 
-def decrypt_message(encrypted_blocks, private_key_b):
+def decrypt_message(encrypted_blocks, private_key):
     decrypted_data = b""
     for encrypted_part in encrypted_blocks:
-        decrypted_part = private_key_b.decrypt(
+        decrypted_part = private_key.decrypt(
             encrypted_part,
             padding.OAEP(
                 mgf=padding.MGF1(algorithm=hashes.SHA256()),
@@ -89,14 +91,15 @@ if __name__ == "__main__":
     private_key_b, public_key_b = generate_keys()
 
     print("Keys generated")
-    message = input("Enter a message to sent to B")
+    message = input("Enter a message to sent to B: ").encode()
 
     print("Creating signature")
     print("Encrypting message")
-    signature = generate_signature(private_key_a)
+    signature = generate_signature(private_key_a,message)
 
     encrypted_blocks = encrypt_message(message, signature,public_key_b)
     print("Sending message from A to B")
+    print(encrypted_blocks)
 
     decrypted_message = decrypt_message(encrypted_blocks, private_key_b)
 
