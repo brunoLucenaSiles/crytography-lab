@@ -181,7 +181,6 @@ if __name__ == "__main__":
     # Exchange keys
     client_a_public = client_b_exchange()
     
-    #print("Client B public key:\n", client_a_public)
     print("I got the public key from A")
     
     p = 23 # Prime number

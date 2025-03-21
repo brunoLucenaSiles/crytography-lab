@@ -17,14 +17,17 @@ def decrypt_aes(key, iv, ciphertext):
     ct = decryptor.update(ciphertext) + decryptor.finalize()
     return ct.decode()
 
-def receive_and_decrypt_message_symmetric():
+def receive_message_symmetric():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(('localhost', 12347))
         s.listen()
         print("Waiting for encrypted message...")
         conn, addr = s.accept()
         with conn:
-            return conn.recv(1024)
+            data = conn.recv(1024)
+            iv = data[:16]
+            ciphertext = data[16:]
+            return iv, ciphertext
 
 def generate_keys_a():
     private_key = rsa.generate_private_key(
@@ -202,7 +205,6 @@ if __name__ == "__main__":
     #print("Public key:\n", private_pem_a.decode())
     
     client_b_public = client_a_exchange()
-    #print("Client B public key:", client_b_public)
     
     print("I got the public key from B")
 
@@ -231,10 +233,9 @@ if __name__ == "__main__":
     aes_key = sha256(str(private_key).encode()).digest()
     
 
-    encripted_data = receive_and_decrypt_message_symmetric()
+    iv, ciphertext = receive_message_symmetric()
 
-    print("Encrypted message:", encripted_data)
-    iv = encripted_data[:16]
-    ciphertext = encripted_data[16:]
+    print("Encrypted message:", ciphertext)
+    
     decrypted_message = decrypt_aes(aes_key, iv, ciphertext)
     print("Decrypted message:", decrypted_message)
