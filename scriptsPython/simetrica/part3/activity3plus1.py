@@ -2,7 +2,22 @@ from collections import Counter
 import string
 import matplotlib.pyplot as plt
 import numpy as np
-from activitiy1 import alphabet_minus, alphabet_mayus, decrypt_caesar
+alphabet_mayus = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+alphabet_minus = "abcdefghijklmnopqrstuvwxyz"
+
+def decrypt_caesar(encrypted_message, moves):
+    decrypt_message = ""
+    for character in encrypted_message:
+        if character in alphabet_mayus:
+            # Encontrar la posición original restando el desplazamiento
+            position = (alphabet_mayus.index(character) - moves) % len(alphabet_mayus)
+            decrypt_message += alphabet_mayus[position]
+        elif character in alphabet_minus:
+            position = (alphabet_minus.index(character) - moves) % len(alphabet_minus)
+            decrypt_message += alphabet_minus[position]
+        else:
+            decrypt_message += character  # Maintain the character if it is not in the alphabet
+    return decrypt_message
 
 # Function to extract the one letter words from a text
 def analyze_counts(text):

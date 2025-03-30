@@ -2,7 +2,8 @@ from collections import Counter
 import string
 import numpy as np
 from activity3plus1 import calculate_average_offset
-from activitiy1 import decrypt_caesar
+alphabet_mayus = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+alphabet_minus = "abcdefghijklmnopqrstuvwxyz"
 
 # Function to extract the one letter words from a text
 def one_letter_words_func(text):
@@ -15,7 +16,8 @@ def one_letter_words_func(text):
     count = Counter(one_letter_words)
     return count
 
-
+# Function to calculate the average offset between the most common words
+def calculate_average_offset(book_counts, cypher_counts):
     offsets = []
 
     # Compare the frequencies of the most common words

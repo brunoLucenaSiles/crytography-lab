@@ -2,7 +2,8 @@ from collections import Counter
 import string
 import matplotlib.pyplot as plt
 import numpy as np
-from activitiy1 import alphabet_minus, alphabet_mayus
+alphabet_mayus = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+alphabet_minus = "abcdefghijklmnopqrstuvwxyz"
 
 # Function to calculate the frequency of each letter in a text
 def calculate_frequencies(text):
