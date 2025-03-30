@@ -4,14 +4,20 @@ import time
 from cryptography.hazmat.primitives.ciphers import (
     Cipher, algorithms, modes
 )
+import ssl
 
 def exchangePrivateNumber(secretNumberA):
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    context.load_cert_chain(certfile="server.crt", keyfile="server.key")
+    context.load_verify_locations("client.crt")
+
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(('localhost', 12345))
         s.listen()
         print("Waiting for the public number...")
-        conn, addr = s.accept()
-        with conn:
+
+        with context.wrap_socket(s, server_side=True) as s:
+            conn, addr = s.accept()
             data = conn.recv(1024)
             numberFromB = int(data.decode())
             print("Public number received from B:", numberFromB)
@@ -40,6 +46,8 @@ def decrypt_aes(key, iv, ciphertext):
 if __name__ == "__main__":
     p = 23 # Prime number
     g = 5  # Primitive root modulo p
+
+    print("Archivos en el directorio actual:")
 
     privateKeyA= int(input("Enter a private number for A: "))
     publicKeyA = pow(g, privateKeyA, p)

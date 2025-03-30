@@ -61,7 +61,7 @@ def verify_signature(decrypted_data, client_public_key):
             ),
             hashes.SHA256()  # Algoritmo hash utilizado
         )
-        print("The firm is valid:")
+        print("The firm is valid")
         return message.decode()
     except Exception as e:
         print("The firm is not valid:", e)

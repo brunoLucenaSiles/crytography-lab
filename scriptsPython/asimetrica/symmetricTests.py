@@ -22,11 +22,11 @@ def encrypt_decrypt_aes():
     print("Decrypted message:", ct)
 
 def verificate_hash_messages():
-    message1 = hashlib.sha256(b'Hello world')
+    message1 = hashlib.md5(b'Hello world')
     print(message1.hexdigest())
 
 
-    message2 = hashlib.sha256(b'Hello world.')
+    message2 = hashlib.md5(b'Hello world.')
     print(message1.hexdigest())
 
     if(message1.digest() == message2.digest()):
@@ -36,16 +36,16 @@ def verificate_hash_messages():
 
 def verificate_hash_files():    
     with open("file1.txt", "rb") as file:
-        message1 = hashlib.sha256(file.read())
+        message1 = hashlib.md5(file.read())
         print(message1.hexdigest())
 
     with open("file2.txt", "rb") as file:
-        message2 = hashlib.sha256(file.read())
+        message2 = hashlib.md5(file.read())
         print(message2.hexdigest())
 
     
     with open("file3.txt", "rb") as file:
-        message3 = hashlib.sha256(file.read())
+        message3 = hashlib.md5(file.read())
         print(message3.hexdigest())
 
     if(message1.digest() == message2.digest()):
@@ -69,6 +69,7 @@ def generate_password_hashes():
             print("Hash:", hash.hexdigest())
             with open("passwords.txt", "a") as file:
                 file.write(password + " " + hash.hexdigest() + "\n")
+
 if __name__ == "__main__":
     action = int(input("What do you want to do ?"))
     if action == 1:
