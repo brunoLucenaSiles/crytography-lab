@@ -58,18 +58,21 @@ def count_words_valid(text, english_words):
     return valid_word_count
 
 if __name__ == "__main__":
+
+    if(len(sys.argv) != 3):
+        print("Usage: python BFA_RailFence.py <filename.txt> <moves>")
+        sys.exit(1)
+
+    
     nltk.download('words')
     english_words = set(words.words())
 
-    if(len(sys.argv) != 2):
-        print("Usage: python BFA_RailFence.py <moves>")
-        sys.exit(1)
-
     print("Rail Fence Brute Force Attack")
-    tries = int(sys.argv[1])
+    filename = sys.argv[1]
+    tries = int(sys.argv[2])
 
-    # Read the file text
-    with open("encrypted_rail_fence_text.txt", "r") as file:
+    # Read the file text - encrypted_rail_fence_text.txt
+    with open(filename, "r") as file:
         encrypted_message = file.read().strip()
 
 

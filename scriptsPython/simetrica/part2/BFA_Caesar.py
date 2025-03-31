@@ -1,5 +1,6 @@
 import nltk
 from nltk.corpus import words
+import sys
 
 alphabet_mayus = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 alphabet_minus = "abcdefghijklmnopqrstuvwxyz"
@@ -31,11 +32,19 @@ def count_words_valid(text, english_words):
     return valid_word_count
 
 if __name__ == "__main__":
+
+    if(len(sys.argv) != 2):
+        print("Usage: python BFA_Caesar.py <filename.txt>")
+        sys.exit(1)
+
+    filename = sys.argv[1]
+    
     nltk.download('words')
     english_words = set(words.words())
 
-    # Read the file text
-    with open("encrypted_caesar_text.txt", "r") as file:
+    
+    # Read the file text - encrypted_caesar_text.txt
+    with open(filename, "r") as file:
         encrypted_message = file.read().strip()
 
     # Variables to store the best decryption

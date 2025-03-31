@@ -1,9 +1,25 @@
 from collections import Counter
 import string
 import numpy as np
+import sys
 from activity3plus1 import calculate_average_offset
 alphabet_mayus = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 alphabet_minus = "abcdefghijklmnopqrstuvwxyz"
+
+# Function to decrypt a message encrypted with the Caesar cipher
+def decrypt_caesar(encrypted_message, moves):
+    decrypt_message = ""
+    for character in encrypted_message:
+        if character in alphabet_mayus:
+            # Encontrar la posición original restando el desplazamiento
+            position = (alphabet_mayus.index(character) - moves) % len(alphabet_mayus)
+            decrypt_message += alphabet_mayus[position]
+        elif character in alphabet_minus:
+            position = (alphabet_minus.index(character) - moves) % len(alphabet_minus)
+            decrypt_message += alphabet_minus[position]
+        else:
+            decrypt_message += character  # Maintain the character if it is not in the alphabet
+    return decrypt_message
 
 # Function to extract the one letter words from a text
 def one_letter_words_func(text):
@@ -41,11 +57,18 @@ def calculate_average_offset(book_counts, cypher_counts):
         return round(average)
     return 0
 if __name__ == "__main__":
-    # Read both files texts
-    with open("quijote.txt", "r", encoding="utf-8") as file:
+    if(len(sys.argv) != 3):
+        print("Usage: python activity3.py <filenameNotDecrypted.txt> <filenameDecrypted.txt>")
+        sys.exit(1)
+
+    filenameNotDecrypted = sys.argv[1]
+    filenameDecrypted = sys.argv[2]
+
+    # Read both files texts -- quijote.txt and finis-mundi-encrypted.txt
+    with open(filenameNotDecrypted, "r", encoding="utf-8") as file:
         book_text = file.read()
 
-    with open("finis-mundi-encrypted.txt", "r", encoding="utf-8") as file:
+    with open(filenameDecrypted, "r", encoding="utf-8") as file:
         encrypted_text = file.read()
 
     book_counts = one_letter_words_func(book_text)

@@ -2,6 +2,7 @@ from collections import Counter
 import string
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 alphabet_mayus = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 alphabet_minus = "abcdefghijklmnopqrstuvwxyz"
 
@@ -72,11 +73,19 @@ def decripting_with_mapping(text, mapping):
 
 
 if __name__ == "__main__":
-    # Read both files texts
-    with open("quijote.txt", "r", encoding="utf-8") as file:
+
+    if(len(sys.argv) != 3):
+        print("Usage: python activity3.py <filenameNotDecrypted.txt> <filenameDecrypted.txt>")
+        sys.exit(1)
+
+    filenameNotDecrypted = sys.argv[1]
+    filenameDecrypted = sys.argv[2]
+
+    # Read both files texts -- quijote.txt and finis-mundi-encrypted.txt
+    with open(filenameNotDecrypted, "r", encoding="utf-8") as file:
         book_text = file.read()
 
-    with open("finis-mundi-encrypted.txt", "r", encoding="utf-8") as file:
+    with open(filenameDecrypted, "r", encoding="utf-8") as file:
         encrypted_text = file.read()
         
     # Calculate the frequencies of the letters in both texts
