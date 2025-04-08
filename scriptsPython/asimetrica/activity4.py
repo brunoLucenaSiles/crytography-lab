@@ -1,9 +1,9 @@
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import hashes
+import sys
 
-# hay que instalar el paquete pycryptodome
-# pip install pycryptodome
 def generate_signature(private_key,message):
+
     signature = private_key.sign(
         message,
         padding.PSS(
@@ -86,20 +86,29 @@ def decrypt_message(encrypted_blocks, private_key):
     return decrypted_data
 
 if __name__ == "__main__":
+
+    if(len(sys.argv) != 2):
+        print("Usage: python activity4.py <wordToEncrypt>")
+        sys.exit(1)
+
+    message = sys.argv[1]
+    print("Message to encrypt:", message)
+
+    print("Generating keys")
     private_key_a, public_key_a = generate_keys()
 
     private_key_b, public_key_b = generate_keys()
 
-    print("Keys generated")
-    message = input("Enter a message to sent to B: ").encode()
+
+    message_bytes = message.encode('utf-8')
 
     print("Creating signature")
     print("Encrypting message")
-    signature = generate_signature(private_key_a,message)
+    signature = generate_signature(private_key_a,message_bytes)
 
-    encrypted_blocks = encrypt_message(message, signature,public_key_b)
+    encrypted_blocks = encrypt_message(message_bytes, signature,public_key_b)
     print("Sending message from A to B")
-    print(encrypted_blocks)
+    print("Encrypted message:", encrypted_blocks)
 
     decrypted_message = decrypt_message(encrypted_blocks, private_key_b)
 

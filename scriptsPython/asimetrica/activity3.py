@@ -1,8 +1,6 @@
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import hashes
-
-# hay que instalar el paquete pycryptodome
-# pip install pycryptodome
+import sys
 
 def generate_keys():
     private_key = rsa.generate_private_key(
@@ -57,12 +55,20 @@ def decrypt_message(encrypted_blocks, private_key_b):
     return decrypted_data
 
 if __name__ == "__main__":
+
+    if(len(sys.argv) != 2):
+        print("Usage: python activity3.py <wordToEncrypt>")
+        sys.exit(1)
+
+    message = sys.argv[1]
+    print("Message to encrypt:", message)
+
+
+    print("Generating keys")
     private_key_a, public_key_a = generate_keys()
 
     private_key_b, public_key_b = generate_keys()
 
-    print("Keys generated")
-    message = input("Enter a message to sent to B: ")
 
     print("Creating signature")
     print("Encrypting message")
